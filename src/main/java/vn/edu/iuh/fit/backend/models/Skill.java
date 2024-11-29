@@ -3,6 +3,9 @@ package vn.edu.iuh.fit.backend.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import vn.edu.iuh.fit.backend.enums.SkillType;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +24,8 @@ public class Skill {
     private String skillName;
 
     @Column(name = "type")
-    private Byte type;
+    private SkillType type;
 
+    @OneToMany(mappedBy = "skill")
+    private List<JobSkill> jobSkills;
 }

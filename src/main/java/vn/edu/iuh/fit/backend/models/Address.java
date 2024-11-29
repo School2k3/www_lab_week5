@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.models;
 
+import com.neovisionaries.i18n.CountryCode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +21,8 @@ public class Address {
     @Column(name = "city", length = 50)
     private String city;
 
-    @Column(name = "country")
-    private Short country;
+    @Column(name = "country", length = 30)
+    private CountryCode country = CountryCode.VN;
 
     @Column(name = "number", length = 20)
     private String number;
