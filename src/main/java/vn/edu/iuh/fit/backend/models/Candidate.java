@@ -58,5 +58,5 @@ public class Candidate {
     private List<Experience> experiences;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
-    private List<JobSkill> jobSkills;
+    private List<CandidateSkill> candidateSkills;
 }

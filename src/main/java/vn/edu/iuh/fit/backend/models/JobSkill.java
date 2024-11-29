@@ -1,7 +1,9 @@
 package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
 import vn.edu.iuh.fit.backend.ids.JobSkillId;
@@ -10,6 +12,8 @@ import vn.edu.iuh.fit.backend.ids.JobSkillId;
 @Setter
 @Entity
 @Table(name = "job_skill")
+@NoArgsConstructor
+@AllArgsConstructor
 public class JobSkill {
     @EmbeddedId
     private JobSkillId id;
