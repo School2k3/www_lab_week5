@@ -1,9 +1,7 @@
 package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -12,11 +10,8 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "experience")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Experience {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "exp_id", nullable = false)
     private Long id;
 
@@ -35,7 +30,7 @@ public class Experience {
     @Column(name = "work_desc", length = 400)
     private String workDesc;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "can_id", nullable = false)
     private Candidate candidate;
 

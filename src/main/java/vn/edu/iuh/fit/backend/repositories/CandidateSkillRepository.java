@@ -5,4 +5,4 @@ import vn.edu.iuh.fit.backend.ids.CandidateSkillId;
 import vn.edu.iuh.fit.backend.models.CandidateSkill;
 
 public interface CandidateSkillRepository extends JpaRepository<CandidateSkill, CandidateSkillId> {
-}
+  }

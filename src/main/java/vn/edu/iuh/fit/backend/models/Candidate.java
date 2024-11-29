@@ -2,20 +2,16 @@ package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
 @Table(name = "candidate")
 public class Candidate {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -35,28 +31,4 @@ public class Candidate {
     @JoinColumn(name = "address", nullable = false)
     private Address address;
 
-    private int status = 1;
-
-    public Candidate(LocalDate dob, String email, String fullName, String phone, Address address) {
-        this.dob = dob;
-        this.email = email;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.address = address;
-    }
-
-    public Candidate(LocalDate dob, String email, String fullName, String phone, Address address, int status) {
-        this.dob = dob;
-        this.email = email;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.address = address;
-        this.status = status;
-    }
-
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
-    private List<Experience> experiences;
-
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
-    private List<CandidateSkill> candidateSkills;
 }

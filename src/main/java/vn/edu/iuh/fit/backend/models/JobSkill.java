@@ -1,9 +1,7 @@
 package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
 import vn.edu.iuh.fit.backend.ids.JobSkillId;
@@ -12,8 +10,6 @@ import vn.edu.iuh.fit.backend.ids.JobSkillId;
 @Setter
 @Entity
 @Table(name = "job_skill")
-@NoArgsConstructor
-@AllArgsConstructor
 public class JobSkill {
     @EmbeddedId
     private JobSkillId id;
@@ -22,6 +18,11 @@ public class JobSkill {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
+
+    @MapsId("skillId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "skill_id", nullable = false)
+    private Skill skill;
 
     @Column(name = "more_infos", length = 1000)
     private String moreInfos;
