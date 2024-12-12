@@ -2,6 +2,7 @@ package vn.edu.iuh.fit.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -10,8 +11,10 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "candidate")
+@NoArgsConstructor
 public class Candidate {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -30,5 +33,13 @@ public class Candidate {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
+
+    public Candidate(String fullName, LocalDate dob, Address address, String phone, String email) {
+        this.fullName = fullName;
+        this.dob = dob;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
 
 }

@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.backend.ids;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
+@NoArgsConstructor
 public class CandidateSkillId implements Serializable {
     private static final long serialVersionUID = -2220116011877557782L;
     @Column(name = "can_id", nullable = false)
@@ -19,6 +21,11 @@ public class CandidateSkillId implements Serializable {
 
     @Column(name = "skill_id", nullable = false)
     private Long skillId;
+
+    public CandidateSkillId(Long canId, Long skillId) {
+        this.canId = canId;
+        this.skillId = skillId;
+    }
 
     @Override
     public boolean equals(Object o) {
