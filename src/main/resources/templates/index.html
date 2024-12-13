@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello</title>
+  <title>Trang Chủ</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>Hello, Spring Boot!</h1>
+<div class="container text-center mt-5">
+  <h1 class="mb-4">Chào Mừng</h1>
+  <p>Hãy chọn loại tài khoản để đăng nhập:</p>
+  <div>
+    <a href="/login/candidate" class="btn btn-primary btn-lg mr-2">Đăng Nhập Ứng Viên</a>
+    <a href="/login/company" class="btn btn-success btn-lg">Đăng Nhập Nhà Tuyển Dụng</a>
+  </div>
+</div>
 </body>
 </html>

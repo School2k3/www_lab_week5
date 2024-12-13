@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Đăng Nhập Ứng Viên</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Đăng Nhập Ứng Viên</h1>
+  <form action="#" th:action="@{/login/candidate}" method="post">
+    <div class="form-group">
+      <label for="candidateId">ID Ứng Viên:</label>
+      <input type="text" id="candidateId" name="username" class="form-control" placeholder="Nhập ID của bạn" required>
+    </div>
+    <div class="form-group">
+      <label for="candidatePhone">Số Điện Thoại:</label>
+      <input type="password" id="candidatePhone" name="password" class="form-control" placeholder="Nhập số điện thoại của bạn" required>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+  </form>
+</div>
+</body>
+</html>

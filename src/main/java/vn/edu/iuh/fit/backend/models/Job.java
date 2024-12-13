@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -31,4 +33,9 @@ public class Job {
         this.jobDesc = jobDesc;
         this.company = company;
     }
+
+    // Thay vì trực tiếp liên kết với Skill, Job sẽ có liên kết với JobSkill
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
+    private Set<JobSkill> jobSkills; // Quan hệ với bảng JobSkill (thông qua bảng trung gian)
+
 }

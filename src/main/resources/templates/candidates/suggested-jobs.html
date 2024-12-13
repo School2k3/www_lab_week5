@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Gợi Ý Công Việc</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center">Gợi Ý Công Việc</h1>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>#</th>
+      <th>Tên Công Việc</th>
+      <th>Mô Tả</th>
+      <th>Công Ty</th>
+      <th>Kỹ Năng Yêu Cầu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="job, iterStat : ${jobs}">
+      <td th:text="${iterStat.index + 1}"></td>
+      <td th:text="${job.jobName}"></td>
+      <td th:text="${job.jobDesc}"></td>
+      <td th:text="${job.company.compName}"></td>
+      <td>
+        <span th:each="js : ${job.jobSkills}" th:text="${js.skill.skillName} + ', '"></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

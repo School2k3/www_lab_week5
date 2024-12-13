@@ -7,6 +7,7 @@ import vn.edu.iuh.fit.backend.ids.JobSkillId;
 import vn.edu.iuh.fit.backend.models.Job;
 import vn.edu.iuh.fit.backend.models.JobSkill;
 import vn.edu.iuh.fit.backend.models.Skill;
+import vn.edu.iuh.fit.backend.repositories.CandidateSkillRepository;
 import vn.edu.iuh.fit.backend.repositories.JobRepository;
 import vn.edu.iuh.fit.backend.repositories.JobSkillRepository;
 import vn.edu.iuh.fit.backend.repositories.SkillRepository;
@@ -24,6 +25,9 @@ public class JobService {
 
     @Autowired
     private JobSkillRepository jobSkillRepository;
+
+    @Autowired
+    private CandidateSkillRepository candidateSkillRepository;
 
     /**
      * Tạo công việc và liên kết các kỹ năng với mức độ
@@ -55,5 +59,16 @@ public class JobService {
      */
     public List<Job> getAllJobs() {
         return jobRepository.findAll();
+    }
+
+    /**
+     * Gợi ý công việc dựa trên kỹ năng của ứng viên.
+     */
+    public List<Job> suggestJobsForCandidate(Long candidateId) {
+        // Lấy danh sách kỹ năng của ứng viên
+        List<Long> skillIds = candidateSkillRepository.findSkillIdsByCandidateId(candidateId);
+
+        // Tìm các công việc phù hợp với danh sách kỹ năng
+        return jobRepository.findJobsBySkills(skillIds);
     }
 }
