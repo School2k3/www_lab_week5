@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,6 +34,9 @@ public class Candidate {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address", nullable = false)
     private Address address;
+
+    @OneToMany(mappedBy = "can", fetch = FetchType.LAZY)
+    private Set<CandidateSkill> skills;
 
     public Candidate(String fullName, LocalDate dob, Address address, String phone, String email) {
         this.fullName = fullName;

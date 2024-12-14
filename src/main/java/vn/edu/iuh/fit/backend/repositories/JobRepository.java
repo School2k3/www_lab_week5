@@ -10,4 +10,6 @@ import java.util.List;
 public interface JobRepository extends JpaRepository<Job, Long> {
   @Query("SELECT DISTINCT j FROM Job j JOIN j.jobSkills js JOIN js.skill s WHERE s.id IN :skillIds")
   List<Job> findJobsBySkills(@Param("skillIds") List<Long> skillIds);
+
+  List<Job> findByCompanyId(Long companyId);
 }

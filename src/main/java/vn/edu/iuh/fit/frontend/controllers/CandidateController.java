@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vn.edu.iuh.fit.backend.models.Candidate;
 import vn.edu.iuh.fit.backend.models.Job;
+import vn.edu.iuh.fit.backend.models.Skill;
 import vn.edu.iuh.fit.backend.services.CandidateService;
 import vn.edu.iuh.fit.backend.services.JobService;
 
@@ -51,5 +52,15 @@ public class CandidateController {
         // Đưa danh sách công việc vào model
         model.addAttribute("jobs", suggestedJobs);
         return "candidates/suggested-jobs"; // Giao diện hiển thị công việc gợi ý
+    }
+
+    /**
+     * Đề xuất kỹ năng cho ứng viên
+     */
+    @GetMapping("/{id}/suggested-skills")
+    public String getSuggestedSkills(@PathVariable Long id, Model model) {
+        List<Skill> suggestedSkills = candidateService.suggestSkillsForCandidate(id);
+        model.addAttribute("skills", suggestedSkills);
+        return "candidates/suggested-skills"; // Giao diện hiển thị kỹ năng
     }
 }

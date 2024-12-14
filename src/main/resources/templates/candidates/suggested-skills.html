@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đề Xuất Kỹ Năng</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Đề Xuất Kỹ Năng</h1>
+    <p class="text-center">Dưới đây là những kỹ năng bạn nên học để nâng cao cơ hội việc làm:</p>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="skill : ${skills}" th:text="${skill.skillName}"></li>
+    </ul>
+</div>
+</body>
+</html>

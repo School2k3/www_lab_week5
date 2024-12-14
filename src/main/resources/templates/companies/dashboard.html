@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Dashboard Công Ty</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center">Dashboard Công Ty</h1>
+  <p class="text-center">Danh sách các công việc đã đăng</p>
+
+  <div class="text-right mb-3">
+    <a href="/jobs/add" th:href="@{/jobs/add}" class="btn btn-success">Thêm Công Việc Mới</a>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>#</th>
+      <th>Tên Công Việc</th>
+      <th>Mô Tả</th>
+      <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="job, iterStat : ${jobs}">
+      <td th:text="${iterStat.index + 1}"></td>
+      <td th:text="${job.jobName}"></td>
+      <td th:text="${job.jobDesc}"></td>
+      <td>
+        <a th:href="@{/jobs/edit/{id}(id=${job.id})}" class="btn btn-primary btn-sm">Sửa</a>
+        <form th:action="@{/companies/{companyId}/jobs/{jobId}/delete(companyId=${companyId}, jobId=${job.id})}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa công việc này không?');">Xóa</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -71,4 +71,18 @@ public class JobService {
         // Tìm các công việc phù hợp với danh sách kỹ năng
         return jobRepository.findJobsBySkills(skillIds);
     }
+
+    /**
+     * Lấy danh sách công việc của một công ty
+     */
+    public List<Job> getJobsByCompanyId(Long companyId) {
+        return jobRepository.findByCompanyId(companyId);
+    }
+
+    /**
+     * Xóa công việc theo ID
+     */
+    public void deleteJobById(Long jobId) {
+        jobRepository.deleteById(jobId);
+    }
 }

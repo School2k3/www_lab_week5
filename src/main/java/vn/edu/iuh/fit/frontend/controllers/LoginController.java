@@ -80,7 +80,7 @@ public class LoginController {
 
         if (company != null && company.getPhone().equals(password)) {
             // Chuyển hướng đến trang dashboard của nhà tuyển dụng
-            return "redirect:/companies/dashboard";
+            return "redirect:/companies/" + company.getId() + "/dashboard";
         } else {
             // Hiển thị lại trang đăng nhập với thông báo lỗi
             model.addAttribute("error", "Tên đăng nhập hoặc mật khẩu không đúng.");
