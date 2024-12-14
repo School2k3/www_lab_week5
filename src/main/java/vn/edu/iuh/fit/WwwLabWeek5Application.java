@@ -14,6 +14,8 @@ import vn.edu.iuh.fit.backend.models.*;
 import vn.edu.iuh.fit.backend.repositories.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -42,52 +44,89 @@ public class WwwLabWeek5Application {
     private JobSkillRepository jobSkillRepository;
 
     @Bean
-    CommandLineRunner initData(CandidateSkillRepository candidateSkillRepository){
+    CommandLineRunner initData(
+            AddressRepository addressRepository,
+            CompanyRepository companyRepository,
+            CandidateRepository candidateRepository,
+            SkillRepository skillRepository,
+            CandidateSkillRepository candidateSkillRepository,
+            JobRepository jobRepository,
+            JobSkillRepository jobSkillRepository,
+            ExperienceRepository experienceRepository
+    ) {
         return args -> {
-//            Random rnd =new Random();
-//            for (int i = 1; i < 100; i++) {
-//                Address add = new Address(rnd.nextInt(1,100)+"","Quang Trung","HCM",
-//                        rnd.nextInt(70000,80000)+"", CountryCode.VN );
-//                addressRepository.save(add);
+//            // 1. Tạo và lưu Address
+//            List<Address> addresses = Arrays.asList(
+//                    new Address("1600", "Amphitheatre Pkwy", "Mountain View", "94043", CountryCode.US),
+//                    new Address("1", "Microsoft Way", "Redmond", "98052", CountryCode.US),
+//                    new Address("1", "Infinite Loop", "Cupertino", "95014", CountryCode.US),
+//                    new Address("456", "Broadway St", "New York", "10001", CountryCode.US),
+//                    new Address("789", "Market St", "San Francisco", "94103", CountryCode.US)
+//                    // Add 15 more unique addresses
+//            );
+//            addressRepository.saveAll(addresses);
 //
-//                Candidate can=new Candidate("Name #"+i,
-//                        LocalDate.of(1998,rnd.nextInt(1,13),rnd.nextInt(1,29)),
-//                        add,
-//                        rnd.nextLong(1111111111L,9999999999L)+"",
-//                        "email_" + i + "@gmail.com");
-//                candidateRepository.save(can);
-//                System.out.println("Added: " +can);
-//            }
-            // Tạo kỹ năng
-//            Skill javaSkill = skillRepository.save(new Skill("Java", "Java programming", SkillType.TECHNICAL_SKILL));
-//            Skill springSkill = skillRepository.save(new Skill("Spring Boot", "Spring Boot framework", SkillType.TECHNICAL_SKILL));
-//            Skill communicationSkill = skillRepository.save(new Skill("Communication", "Effective communication", SkillType.SOFT_SKILL));
+//            // 2. Tạo và lưu Company
+//            List<Company> companies = Arrays.asList(
+//                    new Company("Google", "contact@google.com", "123456789", addresses.get(0), "https://google.com", "Search Engine"),
+//                    new Company("Microsoft", "contact@microsoft.com", "987654321", addresses.get(1), "https://microsoft.com", "Software Development"),
+//                    new Company("Apple", "contact@apple.com", "555666777", addresses.get(2), "https://apple.com", "Consumer Electronics")
+//                    // Add 17 more unique companies
+//            );
+//            companyRepository.saveAll(companies);
 //
-//            // Tạo dữ liệu mẫu cho Address
-//            Address googleAddress = new Address("1600", "Amphitheatre Parkway", "Mountain View", "94043", CountryCode.US);
-//            Address microsoftAddress = new Address("1", "Microsoft Way", "Redmond", "98052", CountryCode.US);
+//            // 3. Tạo và lưu Skill
+//            List<Skill> skills = Arrays.asList(
+//                    new Skill("Java", "Java programming", SkillType.TECHNICAL_SKILL),
+//                    new Skill("Spring Boot", "Spring Boot framework", SkillType.TECHNICAL_SKILL),
+//                    new Skill("React", "React library for frontend development", SkillType.TECHNICAL_SKILL),
+//                    new Skill("Docker", "Containerization tool", SkillType.TECHNICAL_SKILL),
+//                    new Skill("Communication", "Effective communication skills", SkillType.SOFT_SKILL),
+//                    new Skill("Problem Solving", "Analytical thinking and problem solving", SkillType.SOFT_SKILL)
+//                    // Add 14 more unique skills
+//            );
+//            skillRepository.saveAll(skills);
 //
-//            // Lưu Address trước khi sử dụng trong Company và Candidate
-//            Address savedGoogleAddress = addressRepository.save(googleAddress);
-//            Address savedMicrosoftAddress = addressRepository.save(microsoftAddress);
+//            // 4. Tạo và lưu Candidate
+//            List<Candidate> candidates = Arrays.asList(
+//                    new Candidate("John Doe", LocalDate.of(1990, 5, 15), addresses.get(3), "123456789", "john.doe@gmail.com"),
+//                    new Candidate("Jane Smith", LocalDate.of(1985, 3, 10), addresses.get(4), "987654321", "jane.smith@gmail.com")
+//                    // Add 18 more unique candidates
+//            );
+//            candidateRepository.saveAll(candidates);
 //
-//            // Tạo dữ liệu mẫu cho Company với Address đã lưu
-//            Company google = companyRepository.save(new Company("Google Inc", "contact@google.com", "123456789", savedGoogleAddress, "https://google.com", "Search Engine"));
-//            Company microsoft = companyRepository.save(new Company("Microsoft Corp", "contact@microsoft.com", "987654321", savedMicrosoftAddress, "https://microsoft.com", "Software Development"));
+//            // 5. Tạo và lưu CandidateSkill
+//            List<CandidateSkill> candidateSkills = Arrays.asList(
+//                    new CandidateSkill(new CandidateSkillId(candidates.get(0).getId(), skills.get(0).getId()), candidates.get(0), skills.get(0), "Advanced Java knowledge", SkillLevel.PROFESSIONAL),
+//                    new CandidateSkill(new CandidateSkillId(candidates.get(1).getId(), skills.get(1).getId()), candidates.get(1), skills.get(1), "Intermediate Spring Boot knowledge", SkillLevel.INTERMEDIATE)
+//                    // Add more CandidateSkill objects
+//            );
+//            candidateSkillRepository.saveAll(candidateSkills);
 //
-//            // Tạo ứng viên, sử dụng Address đã lưu
-//            Candidate johnDoe = candidateRepository.save(new Candidate("John Doe", LocalDate.of(1990, 5, 15), savedGoogleAddress, "123456789", "john.doe@gmail.com"));
+//            // 6. Tạo và lưu Job
+//            List<Job> jobs = Arrays.asList(
+//                    new Job("Java Developer", "Develop scalable backend systems", companies.get(0)),
+//                    new Job("Frontend Developer", "Build responsive user interfaces", companies.get(1))
+//                    // Add 18 more unique jobs
+//            );
+//            jobRepository.saveAll(jobs);
 //
-//            // Tạo công việc
-//            Job javaDeveloperJob = jobRepository.save(new Job("Java Developer", "Develop scalable backend systems", google));
+//            // 7. Tạo và lưu JobSkill
+//            List<JobSkill> jobSkills = Arrays.asList(
+//                    new JobSkill(new JobSkillId(jobs.get(0).getId(), skills.get(0).getId()), jobs.get(0), skills.get(0), "Advanced Java required", SkillLevel.PROFESSIONAL),
+//                    new JobSkill(new JobSkillId(jobs.get(1).getId(), skills.get(2).getId()), jobs.get(1), skills.get(2), "Intermediate React required", SkillLevel.INTERMEDIATE)
+//                    // Add more JobSkill objects
+//            );
+//            jobSkillRepository.saveAll(jobSkills);
 //
-//            // Tạo JobSkill (Gắn kỹ năng vào công việc)
-//            jobSkillRepository.save(new JobSkill(new JobSkillId(javaDeveloperJob.getId(), javaSkill.getId()), javaDeveloperJob, javaSkill, "Advanced Java knowledge required", SkillLevel.PROFESSIONAL));
-//            jobSkillRepository.save(new JobSkill(new JobSkillId(javaDeveloperJob.getId(), springSkill.getId()), javaDeveloperJob, springSkill, "Spring Boot expertise needed", SkillLevel.ADVANCED));
-//
-//            // Tạo CandidateSkill (Gắn kỹ năng vào ứng viên)
-//            candidateSkillRepository.save(new CandidateSkill(new CandidateSkillId(johnDoe.getId(), javaSkill.getId()), johnDoe, javaSkill, "Strong Java experience", SkillLevel.PROFESSIONAL));
-//            candidateSkillRepository.save(new CandidateSkill(new CandidateSkillId(johnDoe.getId(), communicationSkill.getId()), johnDoe, communicationSkill, "Effective communicator", SkillLevel.INTERMEDIATE));
+//            // 8. Tạo và lưu Experience
+//            List<Experience> experiences = Arrays.asList(
+//                    new Experience(LocalDate.of(2015, 1, 1), LocalDate.of(2020, 1, 1), "Backend Developer", "Google", "Developed APIs", candidates.get(0)),
+//                    new Experience(LocalDate.of(2016, 1, 1), LocalDate.of(2021, 1, 1), "Frontend Developer", "Apple", "Designed UIs", candidates.get(1))
+//                    // Add more Experience objects
+//            );
+//            experienceRepository.saveAll(experiences);
         };
     }
+
 }

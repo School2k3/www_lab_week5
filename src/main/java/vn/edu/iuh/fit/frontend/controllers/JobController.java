@@ -1,10 +1,12 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
+import vn.edu.iuh.fit.backend.models.Company;
 import vn.edu.iuh.fit.backend.models.Job;
 import vn.edu.iuh.fit.backend.repositories.SkillRepository;
 import vn.edu.iuh.fit.backend.services.JobService;
@@ -39,10 +41,19 @@ public class JobController {
     public String addJob(
             @ModelAttribute Job job,
             @RequestParam List<Long> skillIds,
-            @RequestParam SkillLevel skillLevel
+            @RequestParam SkillLevel skillLevel,
+            HttpSession session
     ) {
+        Company company = (Company) session.getAttribute("company");
+        if (company == null) {
+            return "redirect:/login?error";
+        }
+
+        job.setCompany(company);  // Gán công ty cho công việc
         jobService.createJobWithSkills(job, skillIds, skillLevel);
-        return "redirect:/jobs/list";
+
+        // Sau khi thêm công việc thành công, quay lại dashboard
+        return "redirect:/companies/" + company.getId() + "/dashboard";
     }
 
     /**

@@ -49,9 +49,11 @@ public class CandidateController {
         // Lấy danh sách công việc phù hợp
         List<Job> suggestedJobs = jobService.suggestJobsForCandidate(id);
 
-        // Đưa danh sách công việc vào model
+        // Truyền danh sách công việc và candidateId vào model
         model.addAttribute("jobs", suggestedJobs);
-        return "candidates/suggested-jobs"; // Giao diện hiển thị công việc gợi ý
+        model.addAttribute("candidateId", id);
+
+        return "candidates/suggested-jobs";
     }
 
     /**
@@ -61,6 +63,7 @@ public class CandidateController {
     public String getSuggestedSkills(@PathVariable Long id, Model model) {
         List<Skill> suggestedSkills = candidateService.suggestSkillsForCandidate(id);
         model.addAttribute("skills", suggestedSkills);
-        return "candidates/suggested-skills"; // Giao diện hiển thị kỹ năng
+        model.addAttribute("candidateId", id);
+        return "candidates/suggested-skills";
     }
 }

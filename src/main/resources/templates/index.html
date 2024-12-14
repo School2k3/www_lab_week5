@@ -3,14 +3,156 @@
 <head>
   <title>Trang Chủ</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #007bff;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .navbar-nav .btn {
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar-nav .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: #343a40;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    h3 {
+      color: #007bff;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    table th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    table td {
+      font-size: 1.1rem;
+      color: #495057;
+    }
+
+    table tbody tr:nth-child(even) {
+      background-color: #f1f1f1;
+    }
+
+    .btn-info {
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+    }
+
+    .btn-info:hover {
+      background-color: #138496;
+      border-color: #117a8b;
+    }
+
+    .pagination {
+      margin-top: 20px;
+    }
+
+    .pagination .page-item .page-link {
+      color: #007bff;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .pagination .page-item:hover .page-link {
+      background-color: #0056b3;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-<div class="container text-center mt-5">
-  <h1 class="mb-4">Chào Mừng</h1>
-  <p>Hãy chọn loại tài khoản để đăng nhập:</p>
-  <div>
-    <a href="/login/candidate" class="btn btn-primary btn-lg mr-2">Đăng Nhập Ứng Viên</a>
-    <a href="/login/company" class="btn btn-success btn-lg">Đăng Nhập Nhà Tuyển Dụng</a>
+<div class="container-fluid">
+  <!-- Navbar với nút đăng nhập ở góc phải -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="#">Trang Chủ</a>
+    <div class="ml-auto">
+      <a href="/login/candidate" class="btn btn-primary btn-sm mr-2">Đăng Nhập Ứng Viên</a>
+      <a href="/login/company" class="btn btn-success btn-sm">Đăng Nhập Nhà Tuyển Dụng</a>
+    </div>
+  </nav>
+
+  <!-- Phần nội dung chính -->
+  <div class="container text-center mt-5">
+    <h1 class="mb-4">Chào Mừng</h1>
+
+    <!-- Danh sách công ty -->
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Các Công Ty Đang Tuyển Dụng</h3>
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Tên Công Ty</th>
+            <th>Thông Tin</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Lặp qua các công ty -->
+          <tr th:each="company : ${companies.content}">
+            <td th:text="${company.id}"></td>
+            <td th:text="${company.compName}"></td>
+            <td><a th:href="@{/company/{id}(id=${company.id})}" class="btn btn-info btn-sm">Xem Chi Tiết</a></td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Phân trang -->
+        <div class="d-flex justify-content-between">
+          <div>
+            <span th:text="'Tổng cộng: ' + ${companies.totalElements}"></span>
+          </div>
+          <div>
+            <ul class="pagination">
+              <!-- Nút Trang Trước -->
+              <li class="page-item" th:classappend="${companies.pageable.pageNumber == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{/page/{page}(page=${companies.pageable.pageNumber - 1})}">Trước</a>
+              </li>
+
+              <!-- Các số trang -->
+              <li th:each="pageNum : ${pageNumbers}" class="page-item" th:classappend="${pageNum == companies.pageable.pageNumber + 1} ? 'active'">
+                <a class="page-link" th:href="@{/page/{page}(page=${pageNum - 1})}" th:text="${pageNum}"></a>
+              </li>
+
+              <!-- Nút Trang Sau -->
+              <li class="page-item" th:classappend="${companies.pageable.pageNumber == companies.totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{/page/{page}(page=${companies.pageable.pageNumber + 1})}">Sau</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 </body>

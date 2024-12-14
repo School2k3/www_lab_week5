@@ -7,6 +7,13 @@
 <body>
 <div class="container mt-5">
   <h1 class="text-center">Gợi Ý Công Việc</h1>
+
+  <!-- Nút để xem các kỹ năng được đề xuất -->
+  <div class="text-right mb-3">
+    <a th:href="@{/candidates/{id}/suggested-skills(id=${candidateId})}" class="btn btn-info">Đề xuất kỹ năng</a>
+  </div>
+
+  <!-- Bảng hiển thị danh sách công việc -->
   <table class="table table-striped">
     <thead class="thead-dark">
     <tr>

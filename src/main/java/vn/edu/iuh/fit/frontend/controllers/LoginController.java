@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,13 +74,15 @@ public class LoginController {
     public String handleCompanyLogin(
             @RequestParam String username,
             @RequestParam String password,
-            Model model
+            Model model,
+            HttpSession session
     ) {
         Company company = companyRepository.findById(Long.valueOf(username))
                 .orElse(null);
 
         if (company != null && company.getPhone().equals(password)) {
             // Chuyển hướng đến trang dashboard của nhà tuyển dụng
+            session.setAttribute("company", company);
             return "redirect:/companies/" + company.getId() + "/dashboard";
         } else {
             // Hiển thị lại trang đăng nhập với thông báo lỗi

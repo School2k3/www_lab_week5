@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.backend.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.enums.SkillLevel;
@@ -45,7 +46,7 @@ public class JobService {
                     new JobSkillId(savedJob.getId(), skill.getId()),
                     savedJob,
                     skill,
-                    "Yêu cầu kỹ năng này cho công việc",
+                    "This skill is required for the job",
                     skillLevel
             );
             jobSkillRepository.save(jobSkill);
@@ -82,7 +83,13 @@ public class JobService {
     /**
      * Xóa công việc theo ID
      */
+    // Đảm bảo phương thức này được gọi trong một giao dịch
+    @Transactional
     public void deleteJobById(Long jobId) {
+        // Xóa tất cả các bản ghi job_skill liên quan đến công việc này
+        jobSkillRepository.deleteByJobId(jobId);
+
+        // Sau đó, xóa công việc
         jobRepository.deleteById(jobId);
     }
 }
