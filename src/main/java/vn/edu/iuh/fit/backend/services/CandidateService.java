@@ -21,6 +21,10 @@ public class CandidateService {
     @Autowired
     private SkillRepository skillRepository;
 
+    public Candidate findById(Long id) {
+        return candidateRepository.findById(id).orElse(null);
+    }
+
     public Page<Candidate> findAll(int pageNo, int pageSize, String sortBy, String sortDirection) {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
@@ -33,4 +37,5 @@ public class CandidateService {
     public List<Skill> suggestSkillsForCandidate(Long candidateId) {
         return skillRepository.findMissingSkillsForCandidate(candidateId);
     }
+
 }

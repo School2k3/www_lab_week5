@@ -12,4 +12,5 @@ import java.util.List;
 
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 //  Page<Candidate> findAllByStatus(int status, Pageable pageable);
+    List<Candidate> findByExperiencesIsNull();
 }

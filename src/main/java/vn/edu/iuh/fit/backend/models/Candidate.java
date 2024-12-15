@@ -38,6 +38,9 @@ public class Candidate {
     @OneToMany(mappedBy = "can", fetch = FetchType.LAZY)
     private Set<CandidateSkill> skills;
 
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
+    private Set<Experience> experiences;
+
     public Candidate(String fullName, LocalDate dob, Address address, String phone, String email) {
         this.fullName = fullName;
         this.dob = dob;

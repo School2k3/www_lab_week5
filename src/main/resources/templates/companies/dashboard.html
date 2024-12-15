@@ -11,6 +11,7 @@
 
   <div class="text-right mb-3">
     <a href="/jobs/add" th:href="@{/jobs/add}" class="btn btn-success">Thêm Công Việc Mới</a>
+    <a th:href="@{/candidates/list}" class="btn btn-primary">Tuyển Ứng Viên</a>
   </div>
 
   <table class="table table-striped">
@@ -28,7 +29,7 @@
       <td th:text="${job.jobName}"></td>
       <td th:text="${job.jobDesc}"></td>
       <td>
-        <a th:href="@{/jobs/edit/{id}(id=${job.id})}" class="btn btn-primary btn-sm">Sửa</a>
+        <a th:href="@{/jobs/{id}/edit(id=${job.id})}" class="btn btn-primary btn-sm">Sửa</a>
         <form th:action="@{/companies/{companyId}/jobs/{jobId}/delete(companyId=${companyId}, jobId=${job.id})}" method="post" style="display:inline;">
           <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa công việc này không?');">Xóa</button>
         </form>

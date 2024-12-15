@@ -14,6 +14,7 @@ import vn.edu.iuh.fit.backend.repositories.JobSkillRepository;
 import vn.edu.iuh.fit.backend.repositories.SkillRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,6 +30,10 @@ public class JobService {
 
     @Autowired
     private CandidateSkillRepository candidateSkillRepository;
+
+    public Job findById(Long id) {
+        return jobRepository.findById(id).orElseThrow();
+    }
 
     /**
      * Tạo công việc và liên kết các kỹ năng với mức độ
@@ -92,4 +97,46 @@ public class JobService {
         // Sau đó, xóa công việc
         jobRepository.deleteById(jobId);
     }
+
+    @Transactional
+    public Job updateJobWithSkills(Job job, List<Long> skillIds, Map<Long, String> skillLevels) {
+        Long jobId = job.getId();
+        if (jobId == null) {
+            throw new IllegalArgumentException("Job ID must not be null");
+        }
+
+        Job existingJob = jobRepository.findById(jobId)
+                .orElseThrow(() -> new IllegalArgumentException("Job not found!"));
+
+        // Update job details
+        existingJob.setJobName(job.getJobName());
+        existingJob.setJobDesc(job.getJobDesc());
+
+        // Delete existing JobSkills
+        jobSkillRepository.deleteByJobId(existingJob.getId());
+
+        // Add new JobSkills
+        for (Long skillId : skillIds) {
+            Skill skill = skillRepository.findById(skillId)
+                    .orElseThrow(() -> new IllegalArgumentException("Skill not found!"));
+
+            // Get skillLevel from the map and convert to SkillLevel enum
+            String levelString = skillLevels.get(skillId);
+            SkillLevel skillLevel = SkillLevel.valueOf(levelString); // Convert string to enum
+
+            JobSkill jobSkill = new JobSkill(
+                    new JobSkillId(existingJob.getId(), skill.getId()),
+                    existingJob,
+                    skill,
+                    "This skill is required for the job",
+                    skillLevel
+            );
+            jobSkillRepository.save(jobSkill);
+        }
+
+        // Save job
+        return jobRepository.save(existingJob);
+    }
+
+
 }

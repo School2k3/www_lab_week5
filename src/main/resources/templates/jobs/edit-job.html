@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Thêm Công Việc</title>
+  <title>Chỉnh Sửa Công Việc</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-  <h1 class="text-center">Thêm Công Việc</h1>
-  <form action="#" th:action="@{/jobs/add}" th:object="${job}" method="post">
+  <h1 class="text-center">Chỉnh Sửa Công Việc</h1>
+  <form th:action="@{/jobs/edit}" th:object="${job}" method="post">
+    <input type="hidden" th:field="*{id}">
     <div class="form-group">
       <label for="jobName">Tên Công Việc:</label>
       <input type="text" id="jobName" name="jobName" th:field="*{jobName}" class="form-control" required>
@@ -21,18 +22,26 @@
     <div class="form-group">
       <label for="skills">Chọn Kỹ Năng:</label>
       <select id="skills" name="skillIds" multiple class="form-control">
-        <option th:each="skill : ${skills}" th:value="${skill.id}" th:text="${skill.skillName}"></option>
+        <option th:each="skill : ${skills}"
+                th:value="${skill.id}"
+                th:text="${skill.skillName}"
+                th:selected="${selectedSkillIds.contains(skill.id)}"></option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="skillLevel">Mức Độ Yêu Cầu:</label>
-      <select id="skillLevel" name="skillLevel" class="form-control">
-        <option th:each="level : ${skillLevels}" th:value="${level}" th:text="${level}"></option>
+      <select id="skillLevel" name="skillLevels[__${skill.id}__]" class="form-control" th:each="skill : ${skills}" th:if="${selectedSkillIds.contains(skill.id)}">
+        <option th:each="level : ${skillLevels}"
+                th:value="${level}"
+                th:text="${level}"
+                th:selected="${selectedSkillLevels[skill.id] == level}"></option>
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Lưu Công Việc</button>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    <a href="/companies/dashboard" class="btn btn-secondary">Hủy</a>
   </form>
 </div>
 </body>

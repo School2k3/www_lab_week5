@@ -83,6 +83,8 @@ public class LoginController {
         if (company != null && company.getPhone().equals(password)) {
             // Chuyển hướng đến trang dashboard của nhà tuyển dụng
             session.setAttribute("company", company);
+            // Trong phương thức login hoặc khi tạo công ty
+            session.setAttribute("companyId", company.getId());
             return "redirect:/companies/" + company.getId() + "/dashboard";
         } else {
             // Hiển thị lại trang đăng nhập với thông báo lỗi
